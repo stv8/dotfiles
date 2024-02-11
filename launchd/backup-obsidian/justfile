@@ -1,0 +1,10 @@
+install:
+    cp ./prometheus.backup-obsidian.plist ~/Library/LaunchAgents/prometheus.backup-obsidian.plist
+    launchctl bootout gui/501 ~/Library/LaunchAgents/prometheus.backup-obsidian.plist
+    launchctl bootstrap gui/501 ~/Library/LaunchAgents/prometheus.backup-obsidian.plist
+
+run:
+    launchctl kickstart gui/501/prometheus.backup.obsidian
+
+
+
