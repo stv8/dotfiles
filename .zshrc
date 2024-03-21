@@ -93,3 +93,5 @@ export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 
 eval "$(zoxide init zsh)"
 
+
+eval "$(gh copilot alias -- zsh)"
