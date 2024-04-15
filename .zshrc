@@ -95,3 +95,9 @@ eval "$(zoxide init zsh)"
 
 
 eval "$(gh copilot alias -- zsh)"
+
+
+# Aliases
+alias lg="lazygit"
+
+alias dkr="docker"
