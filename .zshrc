@@ -35,7 +35,7 @@ eval "$(gh copilot alias -- zsh)"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv &> /dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-pyenv virtualenvwrapper_lazy
+command -v 'pyenv virtualenvwrapper_lazy' &> /dev/null && pyenv virtualenvwrapper_lazy
 
 
 # utils
