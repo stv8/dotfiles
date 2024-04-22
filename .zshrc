@@ -1,6 +1,9 @@
+[[ -v ZEBUG ]] && zmodload zsh/zprof
+
 export ZSH="$HOME/.oh-my-zsh"
 
 zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' frequency 7
 
 COMPLETION_WAITING_DOTS="true"
 
@@ -50,5 +53,9 @@ alias lg="lazygit"
 alias dkr="docker"
 # https://github.com/pyenv/pyenv#homebrew-in-macos
 alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+alias ztime='time zsh -i -c exit'
+alias zconf='vim ~/.zshrc'
 
 eval "$(starship init zsh)"
+
+[[ -v ZEBUG ]] && zprof
