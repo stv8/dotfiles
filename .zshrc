@@ -55,6 +55,9 @@ alias dkr="docker"
 alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
 alias ztime='time zsh -i -c exit'
 alias zconf='vim ~/.zshrc'
+alias zload='exec zsh'
+alias vim='nvim'
+alias vvim='/usr/bin/vim'
 
 eval "$(starship init zsh)"
 
