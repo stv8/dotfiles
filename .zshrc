@@ -27,7 +27,6 @@ export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 
 # evals
 eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(register-python-argcomplete pipx)"
 eval "$(zoxide init zsh)"
 command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 
