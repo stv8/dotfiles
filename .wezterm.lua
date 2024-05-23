@@ -12,6 +12,8 @@ config.color_scheme = "Tokyo Night"
 
 config.window_background_opacity = 0.95
 
+config.tab_bar_at_bottom = true
+
 config.keys = {
 	{ key = "LeftArrow", mods = "CMD", action = act.ActivateTabRelative(-1) },
 	{ key = "RightArrow", mods = "CMD", action = act.ActivateTabRelative(1) },
@@ -19,6 +21,11 @@ config.keys = {
 	{ key = "LeftArrow", mods = "OPT", action = act.SendString("\x1bb") },
 	-- Make Option-Right equivalent to Alt-f; forward-word
 	{ key = "RightArrow", mods = "OPT", action = act.SendString("\x1bf") },
+	{
+		key = "k",
+		mods = "CMD",
+		action = act.ClearScrollback("ScrollbackAndViewport"),
+	},
 }
 
 -- and finally, return the configuration to wezterm
