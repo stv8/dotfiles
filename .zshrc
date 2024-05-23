@@ -56,6 +56,7 @@ alias ztime='time zsh -i -c exit'
 alias zconf='vim ~/.zshrc'
 alias zload='exec zsh'
 alias vim='nvim'
+alias vconf='nvim ~/.config/nvim/'
 alias vvim='/usr/bin/vim'
 
 eval "$(starship init zsh)"
