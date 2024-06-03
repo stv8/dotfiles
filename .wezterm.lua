@@ -12,7 +12,14 @@ config.color_scheme = "Tokyo Night"
 
 config.window_background_opacity = 0.95
 
--- config.tab_bar_at_bottom = true
+config.tab_bar_at_bottom = true
+
+-- disable ligatures
+config.font = wezterm.font({
+	family = "JetBrains Mono",
+	weight = "Medium",
+	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
+})
 
 config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 1000 }
 
@@ -20,7 +27,7 @@ config.window_padding = {
 	left = "0.5cell",
 	right = "0.5cell",
 	top = "0.5cell",
-	bottom = "0",
+	bottom = "0.5cell",
 }
 
 local function is_vim(pane)
