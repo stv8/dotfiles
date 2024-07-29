@@ -24,6 +24,7 @@ export PATH="$PATH:/Users/sean/.local/bin"
 export PATH="$PATH:/Users/prometheus/.local/bin"
 export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
+export PATH="$(brew --prefix sqlite)/bin:${PATH}"
 
 # evals
 eval "$(/opt/homebrew/bin/brew shellenv)"
