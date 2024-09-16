@@ -39,6 +39,7 @@ command -v pyenv &> /dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 command -v virtualenvwrapper_lazy.sh &> /dev/null && pyenv virtualenvwrapper_lazy
 
+eval "$(_SQLITE_UTILS_COMPLETE=zsh_source sqlite-utils)"
 
 # utils
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -62,3 +63,15 @@ alias vvim='/usr/bin/vim'
 eval "$(starship init zsh)"
 
 [[ -v ZEBUG ]] && zprof
+
+
+# Herd injected PHP 8.3 configuration.
+export HERD_PHP_83_INI_SCAN_DIR="/Users/prometheus/Library/Application Support/Herd/config/php/83/"
+
+# Herd injected PHP binary.
+export PATH="/Users/prometheus/Library/Application Support/Herd/bin/":$PATH
+
+source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
+chruby 3
+
+export PATH="$(brew --prefix sqlite)/bin:${PATH}"
