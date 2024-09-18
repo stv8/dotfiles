@@ -41,7 +41,7 @@ config.window_background_image_hsb = {
 config.window_padding = {
   left = '0.5cell',
   right = '0.5cell',
-  top = '0.5cell',
+  top = '1.0cell',
   bottom = '0',
 }
 
