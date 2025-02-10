@@ -53,7 +53,9 @@ set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 
 " set <leader> to <space>
 let mapleader = " "
-map <leader>sf <action>(com.mituuz.fuzzier.Fuzzier)
+map <leader>ff <action>(com.mituuz.fuzzier.Fuzzier)
+map <Leader>mf <action>(com.mituuz.fuzzier.FuzzyMover)
+map <Leader>gf <action>(com.mituuz.fuzzier.FuzzierVCS)
 map <leader>r <Action>(RenameElement)
 map <leader>s/ <Action>(FileStructurePopup)
 map <leader>sc <Action>(GotoClass)
