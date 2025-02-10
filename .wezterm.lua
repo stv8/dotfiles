@@ -137,6 +137,22 @@ config.keys = {
     action = act.ClearScrollback 'ScrollbackAndViewport',
   },
   {
+    -- create a 1:2 split pane
+    key = 't',
+    mods = 'CTRL',
+    action = wezterm.action_callback(function(win, pane)
+      local new_pane = pane:split { direction = 'Right' }
+      new_pane:split { direction = 'Top' }
+      new_pane:split { direction = 'Top' }
+    end),
+  },
+  {
+    -- Display Tab Navigator
+    key = 't',
+    mods = 'CMD|SHIFT',
+    action = act.ShowTabNavigator,
+  },
+  {
     key = ',',
     mods = 'SUPER',
     action = wezterm.action.SpawnCommandInNewTab {
