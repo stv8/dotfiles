@@ -1,0 +1,12 @@
+[user]
+	name = Sean Villars
+[pull]
+	rebase = false
+[blame]
+	ignoreRevsFile = .git-blame-ignore-revs
+[rebase]
+	autoStash = true
+[rerere]
+	enabled = true
+[init]
+	defaultBranch = main
