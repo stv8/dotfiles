@@ -9,7 +9,8 @@ config.set_environment_variables = {
   PATH = '/opt/homebrew/bin:' .. os.getenv 'PATH',
 }
 
-config.color_scheme = 'Tokyo Night'
+-- config.color_scheme = 'Tokyo Night'
+config.color_scheme = 'catppuccin-macchiato'
 
 -- Slightly transparent and blurred background
 config.window_background_opacity = 0.9

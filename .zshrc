@@ -75,4 +75,7 @@ export PATH="/Users/prometheus/Library/Application Support/Herd/bin/":$PATH
 source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
 chruby 3
 
+# Misc tool exports
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
+
 export PATH="$(brew --prefix sqlite)/bin:${PATH}"
