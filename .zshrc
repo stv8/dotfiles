@@ -77,5 +77,5 @@ chruby 3
 
 # Misc tool exports
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
-
-export PATH="$(brew --prefix sqlite)/bin:${PATH}"
+# TODO put this in its own fzf_ui() fn
+# export FZF_DEFAULT_OPTS="--style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
