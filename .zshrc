@@ -32,7 +32,7 @@ eval "$(zoxide init zsh)"
 command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 
 # todo this doesn't work on personal
-eval "$(gh copilot alias -- zsh)"
+# eval "$(gh copilot alias -- zsh)"
 
 # pyenv init
 export PYENV_ROOT="$HOME/.pyenv"
@@ -63,19 +63,18 @@ alias vvim='/usr/bin/vim'
 
 eval "$(starship init zsh)"
 
-[[ -v ZEBUG ]] && zprof
-
-
-# Herd injected PHP 8.3 configuration.
-export HERD_PHP_83_INI_SCAN_DIR="/Users/prometheus/Library/Application Support/Herd/config/php/83/"
-
-# Herd injected PHP binary.
-export PATH="/Users/prometheus/Library/Application Support/Herd/bin/":$PATH
-
 source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
 chruby 3
+
+[[ -v ZEBUG ]] && zprof
 
 # Misc tool exports
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
 # TODO put this in its own fzf_ui() fn
 # export FZF_DEFAULT_OPTS="--style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
+
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
