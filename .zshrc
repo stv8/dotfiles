@@ -76,3 +76,4 @@ source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
 chruby 3
 
 export PATH="$(brew --prefix sqlite)/bin:${PATH}"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
