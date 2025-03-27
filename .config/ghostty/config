@@ -1,0 +1,12 @@
+# NOTE:
+# docs:
+# ghostty +show-config --default --docs | nvim
+# examples:
+# https://github.com/search?q=path%3Aghostty%2Fconfig&type=code
+# ghostty +list-fonts
+# https://ghostty.org/docs/config
+
+theme = catppuccin-mocha
+
+keybind = cmd+left=previous_tab
+keybind = cmd+right=next_tab
