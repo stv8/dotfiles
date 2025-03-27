@@ -20,10 +20,10 @@ function bindHotkey(appName, key)
         hs.spaces.moveWindowToSpace(app_window, nowspace)
         local max = screen:fullFrame()
         local f = app_window:frame()
-        f.x = max.x
-        f.y = max.y
-        f.w = max.w
-        f.h = max.h
+        -- f.x = max.x
+        -- f.y = max.y
+        -- f.w = max.w
+        -- f.h = max.h
         hs.timer.doAfter(0.2, function()
           app_window:setFrame(f)
         end)
