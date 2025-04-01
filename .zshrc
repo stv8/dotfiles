@@ -11,14 +11,6 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# $PATH
-export PATH="$PATH:/Users/sean/.local/bin"
-export PATH="$PATH:/Users/prometheus/.local/bin"
-export PATH="$HOME/.poetry/bin:$PATH"
-export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
-export PATH="$(brew --prefix sqlite)/bin:${PATH}"
-export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-
 # Evals
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(zoxide init zsh)"
@@ -26,6 +18,15 @@ eval "$(_SQLITE_UTILS_COMPLETE=zsh_source sqlite-utils)"
 eval "$(starship init zsh)"
 # todo this makes shell load slow
 # eval "$(gh copilot alias -- zsh)"
+
+# $PATH
+# note must come after brew shellenv to setup tool specific paths
+export PATH="$PATH:/Users/sean/.local/bin"
+export PATH="$PATH:/Users/prometheus/.local/bin"
+export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
+export PATH="$(brew --prefix sqlite)/bin:${PATH}"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 
 command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 
