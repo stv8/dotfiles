@@ -1,15 +1,21 @@
 [[ -v ZEBUG ]] && zmodload zsh/zprof
 
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
 
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 7
+# zstyle ':omz:update' mode auto
+# zstyle ':omz:update' frequency 7
 
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+# if [ -e $ZSH/oh-my-zsh.sh ]; then
+#   source $ZSH/oh-my-zsh.sh
+# fi
+
+autoload -Uz compinit
+compinit
+source <(fzf --zsh)
 
 # Evals
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -42,16 +48,26 @@ export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
 
 # Aliases
 alias lg="lazygit"
+alias lzd="lazydocker"
 alias dkr="docker"
+alias dcu="docker compose up"
+alias dcd="docker compose down"
+alias dcr="docker compose down && docker compose up"
 alias ztime='time zsh -i -c exit'
 alias zconf='vim ~/.zshrc'
 alias zload='exec zsh'
 alias vim='nvim'
 alias vconf='nvim ~/.config/nvim/'
 alias vvim='/usr/bin/vim'
+alias mx="mise x --"
+alias claude="mx claude"
 
-source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
-chruby 3
+source "$HOME/.zsh/git.plugin.zsh"
+
+if [ -e $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh ]; then
+  source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
+  chruby 3
+fi
 
 [[ -v ZEBUG ]] && zprof
 
@@ -60,3 +76,4 @@ timezsh() {
   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
 }
 
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
