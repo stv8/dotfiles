@@ -27,8 +27,7 @@ eval "$(starship init zsh)"
 
 # $PATH
 # note must come after brew shellenv to setup tool specific paths
-export PATH="$PATH:/Users/sean/.local/bin"
-export PATH="$PATH:/Users/prometheus/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 export PATH="$(brew --prefix sqlite)/bin:${PATH}"
