@@ -12,6 +12,22 @@ style = "bold #f1fa8c"
 disabled = true
 
 [python]
+python_binary = [["uv", "run", "--no-python-downloads", "python"]]
 format = 'via [${symbol}(${version} )(\($virtualenv\) )]($style)'
 symbol = " "
 style = "bold #f3e10b"
+
+[nodejs]
+format = ''
+
+[rust]
+format = ''
+
+[golang]
+format = ''
+
+[gcloud]
+format = ''
+
+[buf]
+format = ''
