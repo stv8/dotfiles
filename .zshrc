@@ -1,17 +1,17 @@
 [[ -v ZEBUG ]] && zmodload zsh/zprof
 
-# export ZSH="$HOME/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
-# zstyle ':omz:update' mode auto
-# zstyle ':omz:update' frequency 7
+zstyle ':omz:update' mode auto
+zstyle ':omz:update' frequency 7
 
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(git)
 
-# if [ -e $ZSH/oh-my-zsh.sh ]; then
-#   source $ZSH/oh-my-zsh.sh
-# fi
+if [ -e $ZSH/oh-my-zsh.sh ]; then
+  source $ZSH/oh-my-zsh.sh
+fi
 
 autoload -Uz compinit
 compinit
@@ -32,8 +32,12 @@ export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 export PATH="$(brew --prefix sqlite)/bin:${PATH}"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+export PATH="$PATH:/opt/homebrew/bin"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
+command -v aws &> /dev/null && complete -C '/opt/homebrew/bin/aws_completer' aws
 
 # utils
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -60,8 +64,11 @@ alias vconf='nvim ~/.config/nvim/'
 alias vvim='/usr/bin/vim'
 alias mx="mise x --"
 alias claude="mx claude"
+alias uvr="uv run"
 
 source "$HOME/.zsh/git.plugin.zsh"
+source "$HOME/.secret.zsh"
+
 
 if [ -e $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh ]; then
   source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
@@ -75,4 +82,16 @@ timezsh() {
   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
 }
 
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/src/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/src/google-cloud-sdk/path.zsh.inc"; fi
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/src/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/src/google-cloud-sdk/completion.zsh.inc"; fi
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
