@@ -6,6 +6,7 @@ zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
 
 COMPLETION_WAITING_DOTS="true"
+HOMEBREW_NO_VERIFY_ATTESTATIONS=1
 
 plugins=(git)
 
@@ -70,9 +71,8 @@ source "$HOME/.zsh/git.plugin.zsh"
 source "$HOME/.secret.zsh"
 
 
-if [ -e $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh ]; then
-  source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
-  chruby 3
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
 fi
 
 [[ -v ZEBUG ]] && zprof
