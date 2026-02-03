@@ -1,0 +1,11 @@
+[tools]
+ruby = "4.0"
+node = "24.13.0"
+golang = "latest"
+jq = "latest"
+ripgrep = "latest"
+yq = "latest"
+terraform = "latest"
+
+[settings]
+python.uv_venv_auto = true
