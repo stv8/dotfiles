@@ -1,7 +1,7 @@
 [settings]
 auto_install = true
 idiomatic_version_file_enable_tools = ["node"]
-python.uv_venv_auto = true
+# python.uv_venv_auto = true
 
 
 [tools]
