@@ -96,3 +96,4 @@ case ":$PATH:" in
 esac
 # pnpm end
 eval "$(mise activate zsh)" # after homebrew so mise execs are found first
+eval "$(atuin init zsh)"
