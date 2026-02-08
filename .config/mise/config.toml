@@ -1,3 +1,9 @@
+[settings]
+auto_install = true
+idiomatic_version_file_enable_tools = ["node"]
+# python.uv_venv_auto = true
+
+
 [tools]
 ruby = "4.0"
 node = "24.13.0"
@@ -6,6 +12,27 @@ jq = "latest"
 ripgrep = "latest"
 yq = "latest"
 terraform = "latest"
+"npm:claude" = "latest"
 
-[settings]
-python.uv_venv_auto = true
+awscli = "latest"
+bat = "latest"
+bazelisk = "latest"
+fzf = "latest"
+gh = "latest"
+golangci-lint = "latest"
+helix = "latest"
+lazydocker = "latest"
+lazygit = "latest"
+neovim = "latest"
+pkl = "latest"
+pnpm = "latest"
+"pipx:pre-commit" = "latest"
+starship = "latest"
+stripe = "latest"
+temporal = "latest"
+tflint = "latest"
+atuin = "latest"
+eza = "latest"
+fd = "latest"
+just = "latest"
+

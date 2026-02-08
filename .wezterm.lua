@@ -161,6 +161,57 @@ config.keys = {
       args = { 'nvim', wezterm.config_file },
     },
   },
+  -- Workspace switching (like tmux sessions)
+  {
+    key = 's',
+    mods = 'LEADER',
+    action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' },
+  },
+  {
+    key = 'n',
+    mods = 'LEADER',
+    action = act.PromptInputLine {
+      description = wezterm.format {
+        { Attribute = { Intensity = 'Bold' } },
+        { Foreground = { AnsiColor = 'Fuchsia' } },
+        { Text = 'Enter name for new workspace' },
+      },
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:perform_action(
+            act.SwitchToWorkspace { name = line },
+            pane
+          )
+        end
+      end),
+    },
+  },
+  {
+    key = 'w',
+    mods = 'LEADER',
+    action = act.SwitchToWorkspace,
+  },
+  {
+    key = '[',
+    mods = 'LEADER',
+    action = act.SwitchWorkspaceRelative(-1),
+  },
+  {
+    key = ']',
+    mods = 'LEADER',
+    action = act.SwitchWorkspaceRelative(1),
+  },
+  -- Move current tab left/right
+  {
+    key = '{',
+    mods = 'LEADER',
+    action = act.MoveTabRelative(-1),
+  },
+  {
+    key = '}',
+    mods = 'LEADER',
+    action = act.MoveTabRelative(1),
+  },
   -- move between split panes
   split_nav('move', 'h'),
   split_nav('move', 'j'),
@@ -193,9 +244,91 @@ for i = 1, 8 do
   })
 end
 
+-- Smart tab titles: show process name or directory
+local function get_dir_name(pane)
+  local cwd = pane.current_working_dir
+  if cwd then
+    local path = cwd.file_path or ''
+    local dir = string.match(path, '([^/]+)/?$') or path
+    if dir == os.getenv('USER') then
+      return '~'
+    end
+    return dir
+  end
+  return nil
+end
+
+local function tab_title(tab_info)
+  local title = tab_info.tab_title
+  -- if the tab title is explicitly set, take that
+  if title and #title > 0 then
+    return title
+  end
+  -- Otherwise, use the active pane's process or title
+  local pane = tab_info.active_pane
+  local process = pane.foreground_process_name
+  if process then
+    -- Extract just the executable name
+    process = string.gsub(process, '(.*[/\\])(.*)', '%2')
+
+    -- Detect Claude Code (runs as node)
+    if process == 'node' then
+      local info = pane:get_foreground_process_info()
+      if info and info.argv then
+        for _, arg in ipairs(info.argv) do
+          if string.find(arg, 'claude', 1, true) then
+            local dir = get_dir_name(pane) or ''
+            return 'claude: ' .. dir
+          end
+        end
+      end
+    end
+
+    -- Skip generic shells/runtimes, show directory instead
+    local show_dir_instead = { zsh = true, bash = true, fish = true, node = true }
+    if not show_dir_instead[process] then
+      return process
+    end
+  end
+  -- For shell, show the current directory name
+  return get_dir_name(pane) or pane.title
+end
+
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  local title = tab_title(tab)
+  -- Truncate if too long
+  if #title > max_width - 3 then
+    title = string.sub(title, 1, max_width - 5) .. '…'
+  end
+  return {
+    { Text = ' ' .. (tab.tab_index + 1) .. ': ' .. title .. ' ' },
+  }
+end)
+
+-- Cache for memory usage (avoid running command too frequently)
+local mem_cache = { value = '', last_update = 0 }
+
+local function get_memory_usage()
+  local now = os.time()
+  -- Only update every 15 seconds
+  if now - mem_cache.last_update < 15 then
+    return mem_cache.value
+  end
+
+  local success, stdout = wezterm.run_child_process {
+    'bash', '-c', "top -l 1 -s 0 | awk '/PhysMem/ {print $2}'"
+  }
+  if success then
+    mem_cache.value = '󰍛 ' .. stdout:gsub('%s+', '')
+    mem_cache.last_update = now
+  end
+  return mem_cache.value
+end
+
 local function segments_for_right_status(window)
   return {
     window:active_workspace(),
+    get_memory_usage(),
     wezterm.strftime '%a %b %-d %H:%M',
     wezterm.hostname(),
   }
@@ -266,6 +399,15 @@ wezterm.on('update-status', function(window, _)
 
   window:set_right_status(wezterm.format(elements))
 end)
+
+-- Triple-click selects entire command output (semantic zone)
+config.mouse_bindings = {
+  {
+    event = { Down = { streak = 3, button = 'Left' } },
+    action = act.SelectTextAtMouseCursor 'SemanticZone',
+    mods = 'NONE',
+  },
+}
 
 -- and finally, return the configuration to wezterm
 return config
