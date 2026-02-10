@@ -28,7 +28,7 @@ eval "$(starship init zsh)"
 
 # $PATH
 # note must come after brew shellenv to setup tool specific paths
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$HOME/.bin:$PATH:$HOME/.local/bin"
 export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 export PATH="$(brew --prefix sqlite)/bin:${PATH}"
@@ -67,7 +67,7 @@ alias mx="mise x --"
 alias claude="mx claude"
 alias uvr="uv run"
 
-source "$HOME/.zsh/git.plugin.zsh"
+for f in "$HOME/.zsh/"*.zsh; do source "$f"; done
 source "$HOME/.secret.zsh"
 
 
