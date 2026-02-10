@@ -260,29 +260,23 @@ end
 
 local function tab_title(tab_info)
   local title = tab_info.tab_title
+  local pane = tab_info.active_pane
+  local process = pane.foreground_process_name
+
   -- if the tab title is explicitly set, take that
   if title and #title > 0 then
     return title
   end
   -- Otherwise, use the active pane's process or title
-  local pane = tab_info.active_pane
-  local process = pane.foreground_process_name
   if process then
+    -- Detect Claude Code (path contains /claude/versions/)
+    -- Let Claude Code's own pane title (with status icons) pass through
+    if string.find(process, '/claude/', 1, true) then
+      return pane.title or 'claude'
+    end
+
     -- Extract just the executable name
     process = string.gsub(process, '(.*[/\\])(.*)', '%2')
-
-    -- Detect Claude Code (runs as node)
-    if process == 'node' then
-      local info = pane:get_foreground_process_info()
-      if info and info.argv then
-        for _, arg in ipairs(info.argv) do
-          if string.find(arg, 'claude', 1, true) then
-            local dir = get_dir_name(pane) or ''
-            return 'claude: ' .. dir
-          end
-        end
-      end
-    end
 
     -- Skip generic shells/runtimes, show directory instead
     local show_dir_instead = { zsh = true, bash = true, fish = true, node = true }
@@ -290,8 +284,12 @@ local function tab_title(tab_info)
       return process
     end
   end
-  -- For shell, show the current directory name
-  return get_dir_name(pane) or pane.title
+  -- For shells spawned by Claude Code, pass through Claude's pane title
+  local pane_title = pane.title or ''
+  if string.find(pane_title, 'Claude Code', 1, true) then
+    return pane_title
+  end
+  return get_dir_name(pane) or pane_title
 end
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
