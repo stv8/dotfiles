@@ -47,6 +47,7 @@ command -v aws &> /dev/null && complete -C '/opt/homebrew/bin/aws_completer' aws
 export LOCAL_IP=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk     '{print $2}')
 export UV_PYTHON="3.11"
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
+export BUNDLER_VERSION="4.0.6"
 # TODO put this in its own fzf_ui() fn
 # export FZF_DEFAULT_OPTS="--style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 
@@ -74,6 +75,7 @@ source "$HOME/.secret.zsh"
 if command -v mise &> /dev/null; then
   eval "$(mise activate zsh)"
 fi
+
 
 [[ -v ZEBUG ]] && zprof
 
