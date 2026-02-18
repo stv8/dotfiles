@@ -94,9 +94,9 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
+fi
 if command -v atuin &> /dev/null; then
   eval "$(atuin init zsh)"
-fi
-if command -v mise &> /dev/null; then
-  eval "$(mise activate zsh)" # keep last so mise shims are first in PATH
 fi
