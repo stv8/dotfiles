@@ -7,7 +7,7 @@ idiomatic_version_file_enable_tools = ["node"]
 [tools]
 ruby = "4.0"
 node = "24.13.0"
-golang = "latest"
+golang = "1.25"
 jq = "latest"
 ripgrep = "latest"
 yq = "latest"
@@ -36,4 +36,4 @@ eza = "latest"
 fd = "latest"
 just = "latest"
 overmind = "latest"
-
+"npm:counselors" = "latest"

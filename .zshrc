@@ -60,7 +60,7 @@ alias dcd="docker compose down"
 alias dcr="docker compose down && docker compose up"
 alias ztime='time zsh -i -c exit'
 alias zconf='vim ~/.zshrc'
-alias zload='exec zsh'
+alias zload='exec zsh -l'
 alias vim='nvim'
 alias vconf='nvim ~/.config/nvim/'
 alias vvim='/usr/bin/vim'
@@ -69,11 +69,8 @@ alias claude="mx claude"
 alias uvr="uv run"
 
 for f in "$HOME/.zsh/"*.zsh; do source "$f"; done
-source "$HOME/.secret.zsh"
-
-
-if command -v mise &> /dev/null; then
-  eval "$(mise activate zsh)"
+if [ -f "$HOME/.secret.zsh" ]; then
+  source "$HOME/.secret.zsh" 2>/dev/null
 fi
 
 
@@ -86,9 +83,9 @@ timezsh() {
 
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/src/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/src/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f "$HOME/src/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/src/google-cloud-sdk/path.zsh.inc" >/dev/null 2>&1; fi
 # The next line enables shell command completion for gcloud.
-if [ -f "$HOME/src/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/src/google-cloud-sdk/completion.zsh.inc"; fi
+if [ -f "$HOME/src/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/src/google-cloud-sdk/completion.zsh.inc" >/dev/null 2>&1; fi
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
@@ -97,5 +94,9 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-eval "$(mise activate zsh)" # after homebrew so mise execs are found first
-eval "$(atuin init zsh)"
+if command -v atuin &> /dev/null; then
+  eval "$(atuin init zsh)"
+fi
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)" # keep last so mise shims are first in PATH
+fi
