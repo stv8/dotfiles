@@ -100,3 +100,6 @@ fi
 if command -v atuin &> /dev/null; then
   eval "$(atuin init zsh)"
 fi
+
+# Disable CLI pagers for non-interactive script usage
+export AWS_PAGER=""
