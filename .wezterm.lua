@@ -55,7 +55,7 @@ config.font = wezterm.font {
   harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
 }
 
-config.leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 }
+config.leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 3000 }
 
 local function is_vim(pane)
   -- this is set by the plugin, and unset on ExitPre in Neovim
@@ -345,7 +345,45 @@ local function is_dark()
   return true
 end
 
+-- Cheatsheet shown in the right status bar while LEADER (Ctrl+b) is pending.
+-- Keep entries short so the whole thing fits on most window widths.
+local leader_hint_entries = {
+  { '-', 'split⬇' },
+  { '=', 'split➡' },
+  { 'm', 'zoom' },
+  { 'Spc', 'rotate' },
+  { '0', 'swap' },
+  { 's', 'ws·pick' },
+  { 'n', 'ws·new' },
+  { 'w', 'ws·switch' },
+  { '[ ]', 'ws·prev/next' },
+  { '{ }', 'tab·move' },
+}
+
+local function render_leader_hint()
+  local elements = {
+    { Attribute = { Intensity = 'Bold' } },
+    { Background = { Color = '#f5a97f' } }, -- catppuccin macchiato peach
+    { Foreground = { Color = '#24273a' } }, -- base
+    { Text = ' LEADER ' },
+    { Attribute = { Intensity = 'Normal' } },
+  }
+  for _, entry in ipairs(leader_hint_entries) do
+    table.insert(elements, { Background = { Color = '#363a4f' } }) -- surface0
+    table.insert(elements, { Foreground = { Color = '#f5a97f' } })
+    table.insert(elements, { Text = ' ' .. entry[1] .. ' ' })
+    table.insert(elements, { Foreground = { Color = '#cad3f5' } }) -- text
+    table.insert(elements, { Text = entry[2] .. ' ' })
+  end
+  return wezterm.format(elements)
+end
+
 wezterm.on('update-status', function(window, _)
+  if window:leader_is_active() then
+    window:set_right_status(render_leader_hint())
+    return
+  end
+
   local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
   local segments = segments_for_right_status(window)
 
